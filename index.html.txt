@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NLP API Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background: #e8e8e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Natural Language Processing (NLP) Tool</h1>
+
+    <textarea id="inputText" placeholder="Enter your text here..."></textarea><br>
+
+    <button onclick="callAPI('/tokenize')">Tokenize</button>
+    <button onclick="callAPI('/clean')">Clean Text</button>
+    <button onclick="callAPI('/keywords')">Extract Keywords</button>
+    <button onclick="callAPI('/ner')">Named Entity Recognition</button>
+    <button onclick="callAPI('/sentiment')">Sentiment Analysis</button>
+
+    <pre id="output">Result will appear here...</pre>
+
+    <script>
+        const API_BASE_URL = 'https://your-pythonanywhere-username.pythonanywhere.com';
+
+        async function callAPI(endpoint) {
+            const text = document.getElementById('inputText').value;
+            const response = await fetch(API_BASE_URL + endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const result = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+        }
+    </script>
+
+</body>
+</html>
